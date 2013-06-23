@@ -14,7 +14,10 @@ namespace FiddlerWCAT.Entities
         public string Version { get; set; }
 
         [DefaultValue(200)]
-        public int StatusCode { get; set; }
+        public int? StatusCode { get; set; }
+
+        [DefaultValue(80)]
+        public int? Port { get; set; }
 
         public Default()
         {

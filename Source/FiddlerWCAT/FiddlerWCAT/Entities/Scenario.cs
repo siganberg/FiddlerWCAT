@@ -22,9 +22,7 @@ namespace FiddlerWCAT.Entities
             Duration = 60;
             Warmup = 10;
             Cooldown = 10; 
-
             Default = new Default();
-            Default.StatusCode = 200; 
         }
 
         public void Optimize()

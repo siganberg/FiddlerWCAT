@@ -31,10 +31,10 @@ namespace FiddlerWCAT.Entities
         public void Serialize(Stream serializationStream, object graph)
         {
             var properties = ReflectionHelper.GetProperties(graph);
-            var sw = new StreamWriter(serializationStream);
             var tabs = new String('\t', 1);
-            sw.WriteLine(MemberName ?? graph.GetType().Name.ToLower());
-            sw.WriteLine("{");
+            
+
+            var sb = new StringBuilder();
 
             foreach (var prop in properties)
             {
@@ -50,23 +50,32 @@ namespace FiddlerWCAT.Entities
                         if (defaultValue.Value.Equals(value)) continue;
                     }
 
-                    sw.WriteLine(tabs + @"{0,-10} = {1};", GetMemberName(prop.ProperInfo.Name),
-                                 FormatValue(value));
+                    sb.AppendLine(String.Format(tabs + @"{0,-10} = {1};", GetMemberName(prop.ProperInfo.Name),
+                                 FormatValue(value)));
                 }
                 else if (IsEnumerable(value))
                 {
                     foreach (var obj in (IEnumerable)value)
                         foreach (var line in SerializeObject(obj, GetMemberName(prop.ProperInfo.Name)))
-                            sw.WriteLine(tabs + line);
+                            sb.AppendLine(tabs + line);
                 }
                 else
                 {
                     foreach (var line in SerializeObject(value, GetMemberName(prop.ProperInfo.Name)))
-                        sw.WriteLine(tabs + line);
+                        sb.AppendLine(tabs + line);
                 }
             }
+
+            var sw = new StreamWriter(serializationStream);
+
+            if (sb.Length > 0)
+            {
+                sw.WriteLine(MemberName ?? graph.GetType().Name.ToLower());
+                sw.WriteLine("{");
+                sw.WriteLine(sb);
+                sw.WriteLine("}");
+            }
             
-            sw.WriteLine("}");
             sw.Close();
         }
 
