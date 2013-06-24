@@ -46,6 +46,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContentBlock.cs" />
@@ -58,6 +59,8 @@
     <Compile Include="Entities\Scenario.cs" />
     <Compile Include="Entities\Transaction.cs" />
     <Compile Include="Helper\EntityInfoFactory.cs" />
+    <Compile Include="Helper\PropertyInfoEx.cs" />
+    <Compile Include="Helper\ReflectionHelper.cs" />
     <Compile Include="Helper\Serializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Setting.cs" />

@@ -64,22 +64,4 @@ namespace FiddlerWCAT.Helper
             return expr.Compile();
         }
     }
- 
-
-    public class ReflectionHelper
-    {
-        public static List<PropertyInfoEx> GetProperties(Object obj)
-        {
-            var entityInfo = typeof(EntityInfoFactory<>).MakeGenericType(obj.GetType());
-            return (List<PropertyInfoEx>)entityInfo.InvokeMember("Properties", BindingFlags.GetProperty, null, null, null);
-        }
-    }
-
-
-    public class PropertyInfoEx
-    {
-        public PropertyInfo ProperInfo { get; set; }
-        public Func<Object, Object> GetValue { get; set; }
-        public Action<Object, Object> SetValue { get; set; }
-    }
 }

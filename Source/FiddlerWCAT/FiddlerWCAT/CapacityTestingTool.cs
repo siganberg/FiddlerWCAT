@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.IO;
 using System.Windows.Forms;
 using Fiddler;
 using FiddlerWCAT.Entities;
@@ -29,14 +28,19 @@ namespace FiddlerWCAT
 		void wcatRunSelection_Click(object sender, System.EventArgs e)
 		{
 
-			//-- wcat.wsf -terminate -run -clients localhost,dmgdevv12 -t invalid_header.ubr -s eagl.spe.sony.com -v %1 
+
 			var oSessions = FiddlerApplication.UI.GetSelectedSessions();
 			
 			//-- Create scenario 
 			var scenario = new Scenario();
 	  
 			var def = new Default();
+			scenario.Duration = Settings.Instance.Duration;
+			scenario.Cooldown = Settings.Instance.Cooldown;
+			scenario.Warmup = Settings.Instance.Warmup;
+			scenario.ThrottleRps = 1; 
 			scenario.Default = def; 
+			
 
 			foreach (var oSession in oSessions)
 			{
@@ -52,10 +56,8 @@ namespace FiddlerWCAT
 				scenario.Transaction.Add(transaction);
 			}
 
-			var fs = new FileStream(@"c:\test.ubr", FileMode.Create);
-			var formatter = new CFormatter();
-			formatter.Serialize(fs, scenario);
-			fs.Close();
+			scenario.Optimize();
+		    scenario.Save();
 		}
 
 		

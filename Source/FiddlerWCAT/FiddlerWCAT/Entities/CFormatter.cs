@@ -98,6 +98,7 @@ namespace FiddlerWCAT.Entities
 
         public string FormatValue(Object obj)
         {
+            //-- TODO: need to escape special characters like double quote.
             var objType = obj.GetType();
             return objType == typeof (bool) || objType == typeof (int) ? obj.ToString() : String.Format(@"""{0}""", obj);
         }
