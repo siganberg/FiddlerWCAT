@@ -1,4 +1,17 @@
-﻿using System;
+﻿// <copyright file=" " company="Digitrish">
+// Copyright (c) 2013 All Right Reserved, http://www.digitrish.com
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+// </copyright>
+//
+// <author>Francis Marasigan</author>
+// <email>francis.marasigan@live.com</email>
+// <date>2013-06-23</date>
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,9 +20,8 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
-using FiddlerWCAT.Helper;
 
-namespace FiddlerWCAT.Entities
+namespace FiddlerWCAT.Helper
 {
     public class CFormatter : IFormatter
     {
@@ -100,7 +112,10 @@ namespace FiddlerWCAT.Entities
         {
             //-- TODO: need to escape special characters like double quote.
             var objType = obj.GetType();
-            return objType == typeof (bool) || objType == typeof (int) ? obj.ToString() : String.Format(@"""{0}""", obj);
+            var value = obj.ToString()
+                .Replace(@"\\", @"\\\\")
+                .Replace(@"""", @"\\""");
+            return  objType == typeof (bool) || objType == typeof (int) ? value : String.Format(@"""{0}""", obj);
         }
 
         public bool IsSimpleType(Object obj)

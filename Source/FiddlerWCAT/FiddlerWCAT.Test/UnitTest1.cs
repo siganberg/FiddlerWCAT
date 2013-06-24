@@ -1,10 +1,22 @@
-﻿using System.Collections.Generic;
+﻿// <copyright file=" " company="Digitrish">
+// Copyright (c) 2013 All Right Reserved, http://www.digitrish.com
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+// </copyright>
+//
+// <author>Francis Marasigan</author>
+// <email>francis.marasigan@live.com</email>
+// <date>2013-06-23</date>
+
+using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.Text;
+using FiddlerWCAT.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FiddlerWCAT.Entities;
-using Newtonsoft.Json;
 
 namespace FiddlerWCAT.Test
 {
@@ -24,9 +36,9 @@ namespace FiddlerWCAT.Test
             var formatter = new CFormatter();
             var stream = new MemoryStream();
             formatter.Serialize(stream, scenario);
-            var s = Encoding.Default.GetString((stream.ToArray()));
+            var test = Encoding.Default.GetString((stream.ToArray()));
 
-            Assert.IsTrue(true);
+            Assert.IsNotNull(test);
 
         }
     }

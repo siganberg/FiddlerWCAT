@@ -1,4 +1,19 @@
-﻿using System;
+﻿// <copyright file=" " company="Digitrish">
+// Copyright (c) 2013 All Right Reserved, http://www.digitrish.com
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+// </copyright>
+//
+// <author>Francis Marasigan</author>
+// <email>francis.marasigan@live.com</email>
+// <date>2013-06-23</date>
+      
+      
+      
+using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
@@ -34,7 +49,9 @@ namespace FiddlerWCAT
             wcatDirectoryText.Text = Settings.Instance.WcatHomeDirectory;
             warmupText.Text = Settings.Instance.Warmup.ToString(CultureInfo.InvariantCulture);
             durationText.Text = Settings.Instance.Duration.ToString(CultureInfo.InvariantCulture);
-            cooldownText.Text = Settings.Instance.Cooldown.ToString(CultureInfo.InvariantCulture); 
+            cooldownText.Text = Settings.Instance.Cooldown.ToString(CultureInfo.InvariantCulture);
+            virtualClientText.Text = Settings.Instance.VirtualClient.ToString(CultureInfo.InvariantCulture);
+            rpsText.Text = Settings.Instance.ThrottleRps.ToString(CultureInfo.InvariantCulture); 
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -47,18 +64,21 @@ namespace FiddlerWCAT
         {
             Settings.Instance.WcatHomeDirectory = wcatDirectoryText.Text.Trim();
 
-            int warmup; 
-            int duration;
-            int cooldown;
+            int warmup, duration, cooldown, virtualClient, throttlerps;
+
 
             int.TryParse(warmupText.Text.Trim(), out warmup);
             int.TryParse(durationText.Text.Trim(), out duration);
             int.TryParse(cooldownText.Text.Trim(), out cooldown);
+            int.TryParse(virtualClientText.Text.Trim(), out virtualClient);
+            int.TryParse(rpsText.Text.Trim(), out throttlerps);
 
 
             Settings.Instance.Warmup = warmup;
             Settings.Instance.Duration = duration;
             Settings.Instance.Cooldown = cooldown;
+            Settings.Instance.VirtualClient = virtualClient;
+            Settings.Instance.ThrottleRps = throttlerps; 
             Settings.Instance.Save();
 
             Close();

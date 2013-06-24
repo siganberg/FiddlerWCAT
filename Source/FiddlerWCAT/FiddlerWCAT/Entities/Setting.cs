@@ -1,8 +1,20 @@
-﻿using System;
+﻿// <copyright file="Setting.cs" company="Digitrish">
+// Copyright (c) 2007, 2008 All Right Reserved, http://www.digitrish.com
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+// </copyright>
+//
+// <author>Francis Marasigan</author>
+// <email>francis.marasigan@live.com</email>
+// <date>2013-06-23</date>
+               
+using System;
 using System.IO;
 using System.Windows.Forms;
 using FiddlerWCAT.Helper;
-
 namespace FiddlerWCAT.Entities
 {
     public class Settings
@@ -35,7 +47,8 @@ namespace FiddlerWCAT.Entities
         public int Cooldown { get; set; }
         public int Warmup { get; set; }
         public int VirtualClient { get; set; }
-
+        public int ThrottleRps { get; set; }
+        
         private bool HasChange()
         {
             //-- routine code to invalidate the singleton instance such as reading some configuration 
@@ -101,6 +114,7 @@ namespace FiddlerWCAT.Entities
             wcatDefault = Directory.Exists(wcatDefault) ? wcatDefault : "";
             return wcatDefault; 
         }
+
 
     }
 }

@@ -41,6 +41,10 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.virtualClientText = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.rpsText = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -120,6 +124,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.rpsText);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.virtualClientText);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.warmupText);
             this.groupBox1.Controls.Add(this.label4);
@@ -153,6 +161,38 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // virtualClientText
+            // 
+            this.virtualClientText.Location = new System.Drawing.Point(259, 29);
+            this.virtualClientText.Name = "virtualClientText";
+            this.virtualClientText.Size = new System.Drawing.Size(48, 20);
+            this.virtualClientText.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(147, 32);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Virtual Client";
+            // 
+            // rpsText
+            // 
+            this.rpsText.Location = new System.Drawing.Point(259, 55);
+            this.rpsText.Name = "rpsText";
+            this.rpsText.Size = new System.Drawing.Size(48, 20);
+            this.rpsText.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(147, 58);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(106, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Request Per Second";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,6 +204,7 @@
             this.Controls.Add(this.searchButton);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.wcatDirectoryText);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
@@ -194,5 +235,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox rpsText;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox virtualClientText;
     }
 }

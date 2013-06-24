@@ -1,5 +1,19 @@
-﻿using System;
+﻿// <copyright file=" " company="Digitrish">
+// Copyright (c) 2013 All Right Reserved, http://www.digitrish.com
+//
+// THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+// KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+// </copyright>
+//
+// <author>Francis Marasigan</author>
+// <email>francis.marasigan@live.com</email>
+// <date>2013-06-23</date>
+
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,6 +29,8 @@ namespace FiddlerWCAT.Entities
         public int Warmup { get; set; }
         public int Duration { get; set; }
         public int Cooldown { get; set; }
+
+        [DefaultValue(0)]
         public int? ThrottleRps { get; set; }
         public Default Default { get; set; }
         public List<Transaction> Transaction { get; set; }
@@ -113,9 +129,7 @@ namespace FiddlerWCAT.Entities
 
 
             //-- wcat.wsf -terminate -run -clients localhost,dmgdevv12 -t invalid_header.ubr -s eagl.spe.sony.com -v %1 
-            var command = String.Format(@"/c wcat.wsf -terminate -run -clients localhost -t {1} -s {2} -v {3}" 
-                , Settings.Instance.WcatHomeDirectory
-                , @"wcat_ubr\" + Path.GetFileName(path)
+            var command = String.Format(@"/c wcat.wsf -terminate -run -clients localhost -t {0} -s {1} -v {2}", @"wcat_ubr\" + Path.GetFileName(path)
                 , Default.Server    
                 , Settings.Instance.VirtualClient);
 

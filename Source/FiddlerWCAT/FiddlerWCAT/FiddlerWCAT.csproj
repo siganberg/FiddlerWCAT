@@ -33,9 +33,6 @@
     <Reference Include="Fiddler">
       <HintPath>..\..\..\..\..\Program Files (x86)\Fiddler2\Fiddler.exe</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
@@ -49,10 +46,8 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContentBlock.cs" />
     <Compile Include="CapacityTestingTool.cs" />
-    <Compile Include="Entities\BaseEntity.cs" />
-    <Compile Include="Entities\CFormatter.cs" />
+    <Compile Include="Helper\CFormatter.cs" />
     <Compile Include="Entities\Default.cs" />
     <Compile Include="Entities\Header.cs" />
     <Compile Include="Entities\Request.cs" />
@@ -75,9 +70,6 @@
     <EmbeddedResource Include="SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
