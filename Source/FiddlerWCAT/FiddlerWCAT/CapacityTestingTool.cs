@@ -10,11 +10,12 @@
 // <author>Francis Marasigan</author>
 // <email>francis.marasigan@live.com</email>
 // <date>2013-06-23</date>
-      
+	  
 using System.Globalization;
 using System.Windows.Forms;
 using Fiddler;
 using FiddlerWCAT.Entities;
+using System.Threading;
 
 namespace FiddlerWCAT
 {
@@ -24,6 +25,8 @@ namespace FiddlerWCAT
 		private MenuItem _wcatMenu;
 		private MenuItem _wcatConfig;
 		private MenuItem _wcatRunSelection;
+		private MenuItem _wcatRunSelectionOnce;
+
 
 		public void InitializeMenu()
 		{
@@ -34,9 +37,70 @@ namespace FiddlerWCAT
 			   
 			_wcatMenu.MenuItems.AddRange(new[] { _wcatConfig });
 
-			_wcatRunSelection = new MenuItem {Text = "Run WCAT On Selected Item"};
+			_wcatRunSelection = new MenuItem {Text = "Run WCAT on selected sesions"};
 			_wcatRunSelection.Click += wcatRunSelection_Click;
+
+			_wcatRunSelectionOnce = new MenuItem { Text = "Run WCAT on per selected sessions" };
+			_wcatRunSelectionOnce.Click += _wcatRunSelectionOnce_Click;
 		}
+
+		void _wcatRunSelectionOnce_Click(object sender, System.EventArgs e)
+		{
+			var oSessions = FiddlerApplication.UI.GetSelectedSessions();
+			System.Threading.ThreadPool.QueueUserWorkItem(delegate
+			{
+				RunIndividualSession(oSessions);
+			}, null);
+		}
+
+		private void RunIndividualSession(Session[] sessions)
+		{
+
+
+			for (int index = 0; index < sessions.Length; index++)
+			{
+				var oSession = sessions[index];
+
+				var scenario = new Scenario();
+				var def = new Default();
+				scenario.Name = index.ToString(CultureInfo.InvariantCulture);
+				scenario.Duration = Settings.Instance.Duration;
+				scenario.Cooldown = Settings.Instance.Cooldown;
+				scenario.Warmup = Settings.Instance.Warmup;
+				scenario.ThrottleRps = Settings.Instance.ThrottleRps;
+				scenario.Default = def;
+
+				var transaction = new Transaction {Id = oSession.id.ToString(CultureInfo.InvariantCulture), Weight = 1};
+
+				var request = new Request {Url = oSession.PathAndQuery, Server = oSession.hostname};
+				foreach (var h in oSession.oRequest.headers)
+				{
+					var header = new Header {Name = h.Name, Value = h.Value};
+					request.SetHeader.Add(header);
+
+					var postData = oSession.GetRequestBodyAsString();
+					if (!string.IsNullOrEmpty(postData))
+					{
+						request.Verb = Verb.POST;
+						request.PostData = postData;
+					}
+				}
+				transaction.Request.Add(request);
+				scenario.Transaction.Add(transaction);
+
+				scenario.Optimize();
+				scenario.Save();
+				var result = scenario.Run();
+
+				if (result != 0) break; 
+
+                Thread.Sleep(1000); //-- give some time before the next scenario.
+			}
+
+
+		}
+
+
 
 		void wcatRunSelection_Click(object sender, System.EventArgs e)
 		{
@@ -51,7 +115,7 @@ namespace FiddlerWCAT
 			scenario.Duration = Settings.Instance.Duration;
 			scenario.Cooldown = Settings.Instance.Cooldown;
 			scenario.Warmup = Settings.Instance.Warmup;
-			scenario.ThrottleRps = 1; 
+			scenario.ThrottleRps = Settings.Instance.ThrottleRps; 
 			scenario.Default = def; 
 			
 
@@ -64,13 +128,22 @@ namespace FiddlerWCAT
 				{
 					var header = new Header {Name = h.Name, Value = h.Value};
 					request.SetHeader.Add(header);
+
+					var postData = oSession.GetRequestBodyAsString();
+					if (!string.IsNullOrEmpty(postData))
+					{
+						request.Verb = Verb.POST;
+						request.PostData = postData;
+					}
 				}
 				transaction.Request.Add(request);
 				scenario.Transaction.Add(transaction);
 			}
 
 			scenario.Optimize();
-		    scenario.Save();
+			scenario.Save();
+			scenario.Run();
+
 		}
 
 		
@@ -92,6 +165,8 @@ namespace FiddlerWCAT
 		{
 			FiddlerApplication.UI.mnuMain.MenuItems.Add(_wcatMenu);
 			FiddlerApplication.UI.mnuSessionContext.MenuItems.Add(_wcatRunSelection);
+			FiddlerApplication.UI.mnuSessionContext.MenuItems.Add(_wcatRunSelectionOnce);
+
 		}
 		public void OnBeforeUnload() { }
 

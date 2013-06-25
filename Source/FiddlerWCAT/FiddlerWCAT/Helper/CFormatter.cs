@@ -20,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace FiddlerWCAT.Helper
 {
@@ -53,14 +54,16 @@ namespace FiddlerWCAT.Helper
                 var value = prop.GetValue(graph);
 
                 if (value == null) continue;
+
+                //-- skip ignore field 
+
+                var ignore = prop.ProperInfo.GetCustomAttribute(typeof(XmlIgnoreAttribute), true);
+                if (ignore != null) continue; 
                 
                 if (IsSimpleType(value))
                 {
                     var defaultValue = (DefaultValueAttribute) prop.ProperInfo.GetCustomAttribute(typeof (DefaultValueAttribute), true);
-                    if (defaultValue != null)
-                    {
-                        if (defaultValue.Value.Equals(value)) continue;
-                    }
+                    if (defaultValue != null && defaultValue.Value.Equals(value)) continue;
 
                     sb.AppendLine(String.Format(tabs + @"{0,-10} = {1};", GetMemberName(prop.ProperInfo.Name),
                                  FormatValue(value)));
@@ -112,10 +115,14 @@ namespace FiddlerWCAT.Helper
         {
             //-- TODO: need to escape special characters like double quote.
             var objType = obj.GetType();
+
+            if (objType.IsEnum)
+                return Enum.GetName(objType, obj);
+
             var value = obj.ToString()
-                .Replace(@"\\", @"\\\\")
-                .Replace(@"""", @"\\""");
-            return  objType == typeof (bool) || objType == typeof (int) ? value : String.Format(@"""{0}""", obj);
+                .Replace(@"""", @"\""");
+                //.Replace(@"""", @"\\""");
+            return  objType == typeof (bool) || objType == typeof (int) ? value : String.Format(@"""{0}""", value);
         }
 
         public bool IsSimpleType(Object obj)

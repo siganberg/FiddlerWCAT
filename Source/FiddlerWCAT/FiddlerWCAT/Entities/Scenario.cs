@@ -18,13 +18,16 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Xml.Serialization;
 using FiddlerWCAT.Helper;
 
 namespace FiddlerWCAT.Entities
 {
     [Serializable]
-    public class Scenario 
+    public class Scenario
     {
+        private const string Folder = "ubrs";
+
         public string Name { get; set; }
         public int Warmup { get; set; }
         public int Duration { get; set; }
@@ -34,14 +37,18 @@ namespace FiddlerWCAT.Entities
         public int? ThrottleRps { get; set; }
         public Default Default { get; set; }
         public List<Transaction> Transaction { get; set; }
-        
+
+        [XmlIgnore]
+        public string FilePath { get; set; }
+
+
         public Scenario()
         {
             //-- Initialize with  default Settings
             Transaction = new List<Transaction>();
             Duration = 60;
             Warmup = 10;
-            Cooldown = 10; 
+            Cooldown = 10;
             Default = new Default();
         }
 
@@ -65,12 +72,12 @@ namespace FiddlerWCAT.Entities
         /// <typeparam name="TP">Property Type</typeparam>
         /// <param name="requests">List or request</param>
         /// <param name="property">Property selector  to move</param>
-        private void MoveRequestPropertyToDefault<TP>(List<Request> requests, Expression<Func<Request, TP>> property)  
+        private void MoveRequestPropertyToDefault<TP>(List<Request> requests, Expression<Func<Request, TP>> property)
         {
             var member = (MemberExpression)property.Body;
             var memberName = member.Member.Name;
 
-            var defaultProperty  = EntityInfoFactory<Default>.Properties.FirstOrDefault(a => a.ProperInfo.Name == memberName);
+            var defaultProperty = EntityInfoFactory<Default>.Properties.FirstOrDefault(a => a.ProperInfo.Name == memberName);
             var requestProperty = EntityInfoFactory<Request>.Properties.FirstOrDefault(a => a.ProperInfo.Name == memberName);
 
             if (defaultProperty == null || requestProperty == null) return;
@@ -79,7 +86,7 @@ namespace FiddlerWCAT.Entities
             var highOccurance = servers.OrderByDescending(a => a.Count()).FirstOrDefault();
 
             if (highOccurance == null) return;
-            
+
             var matchRequest = requests.Where(a => requestProperty.GetValue(a) == highOccurance.Key);
             matchRequest.ToList().ForEach(a => requestProperty.SetValue(a, null));
             defaultProperty.SetValue(Default, highOccurance.Key);
@@ -87,7 +94,7 @@ namespace FiddlerWCAT.Entities
 
         private void MoveRequestHeaderToDefault(IEnumerable<Request> requests)
         {
-            var headers = requests.SelectMany(a => a.SetHeader, (a, b) => new { Request = a, Header = b}).ToList();
+            var headers = requests.SelectMany(a => a.SetHeader, (a, b) => new { Request = a, Header = b }).ToList();
             var headerNameOccureMoreThanOnce = headers.GroupBy(a => a.Header.Name).Where(a => a.Count() > 1).ToList();
 
             foreach (var h in headerNameOccureMoreThanOnce)
@@ -103,7 +110,7 @@ namespace FiddlerWCAT.Entities
                 if (highOccuranceHeaderValue != null)
                 {
                     //-- copy header to default 
-                    var header = new Header {Name = h.Key, Value = highOccuranceHeaderValue.Key};
+                    var header = new Header { Name = h.Key, Value = highOccuranceHeaderValue.Key };
                     Default.SetHeader.Add(header);
 
                     //-- remove the original header 
@@ -116,31 +123,44 @@ namespace FiddlerWCAT.Entities
 
         public void Save()
         {
-            const string fileName = "wcat_scenario.ubr";
-
-            var path = Settings.Instance.WcatHomeDirectory + @"\wcat_ubr\";
+            var path = String.Format(@"{0}\{1}\", Settings.Instance.WcatHomeDirectory, Folder);
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            path = path + fileName;
+            FilePath = path + String.Format("scenario_{0}.ubr", Name);
 
-            var fs = new FileStream(path, FileMode.Create);
+            var fs = new FileStream(FilePath, FileMode.Create);
             var formatter = new CFormatter();
             formatter.Serialize(fs, this);
             fs.Close();
+        }
 
-
-            //-- wcat.wsf -terminate -run -clients localhost,dmgdevv12 -t invalid_header.ubr -s eagl.spe.sony.com -v %1 
-            var command = String.Format(@"/c wcat.wsf -terminate -run -clients localhost -t {0} -s {1} -v {2}", @"wcat_ubr\" + Path.GetFileName(path)
-                , Default.Server    
+        public string GetRunSyntax()
+        {
+            return String.Format(@"wcat.wsf -terminate -run -clients localhost -t {0}\{1} -s {2} -v {3}"
+                , Folder
+                , Path.GetFileName(FilePath)
+                , Default.Server
                 , Settings.Instance.VirtualClient);
+        }
+
+
+        public int Run()
+        {
+            //-- wcat.wsf -terminate -run -clients localhost,dmgdevv12 -t invalid_header.ubr -s eagl.spe.sony.com -v %1 
+            var command = String.Format(@"-terminate -run -clients {3} -t ubrs\{0} -s {1} -v {2}", Path.GetFileName(FilePath)
+                , Default.Server
+                , Settings.Instance.VirtualClient
+                , Settings.Instance.Clients);
 
             var processInfo = new ProcessStartInfo
-                {
-                    WorkingDirectory = Settings.Instance.WcatHomeDirectory,
-                    FileName = "cmd.exe",
-                    Arguments = command
-                };
-            Process.Start(processInfo);
+            {
+                WorkingDirectory = Settings.Instance.WcatHomeDirectory,
+                FileName = "wcat.wsf",
+                Arguments = command,
+            };
 
+            var process = Process.Start(processInfo);
+            process.WaitForExit();
+            return  process.ExitCode;
         }
     }
 }

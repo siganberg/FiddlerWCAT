@@ -39,12 +39,14 @@
             this.cooldownText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.rpsText = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.virtualClientText = new System.Windows.Forms.TextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.virtualClientText = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.rpsText = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.clientTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,65 +126,24 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.clientTextBox);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.rpsText);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.virtualClientText);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.warmupText);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.durationText);
             this.groupBox1.Controls.Add(this.cooldownText);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 54);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(328, 125);
+            this.groupBox1.Size = new System.Drawing.Size(328, 166);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Default Value";
-            // 
-            // saveButton
-            // 
-            this.saveButton.Location = new System.Drawing.Point(99, 192);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
-            this.saveButton.TabIndex = 4;
-            this.saveButton.Text = "&Save";
-            this.saveButton.UseVisualStyleBackColor = true;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Location = new System.Drawing.Point(180, 192);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
-            this.cancelButton.TabIndex = 4;
-            this.cancelButton.Text = "&Cancel";
-            this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
-            // 
-            // virtualClientText
-            // 
-            this.virtualClientText.Location = new System.Drawing.Point(259, 29);
-            this.virtualClientText.Name = "virtualClientText";
-            this.virtualClientText.Size = new System.Drawing.Size(48, 20);
-            this.virtualClientText.TabIndex = 0;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(147, 32);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Virtual Client";
-            // 
-            // rpsText
-            // 
-            this.rpsText.Location = new System.Drawing.Point(259, 55);
-            this.rpsText.Name = "rpsText";
-            this.rpsText.Size = new System.Drawing.Size(48, 20);
-            this.rpsText.TabIndex = 0;
             // 
             // label6
             // 
@@ -193,11 +154,70 @@
             this.label6.TabIndex = 1;
             this.label6.Text = "Request Per Second";
             // 
+            // rpsText
+            // 
+            this.rpsText.Location = new System.Drawing.Point(259, 55);
+            this.rpsText.Name = "rpsText";
+            this.rpsText.Size = new System.Drawing.Size(48, 20);
+            this.rpsText.TabIndex = 0;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(147, 32);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Virtual Client";
+            // 
+            // virtualClientText
+            // 
+            this.virtualClientText.Location = new System.Drawing.Point(259, 29);
+            this.virtualClientText.Name = "virtualClientText";
+            this.virtualClientText.Size = new System.Drawing.Size(48, 20);
+            this.virtualClientText.TabIndex = 0;
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(92, 226);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.TabIndex = 4;
+            this.saveButton.Text = "&Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Location = new System.Drawing.Point(173, 226);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.TabIndex = 4;
+            this.cancelButton.Text = "&Cancel";
+            this.cancelButton.UseVisualStyleBackColor = true;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // clientTextBox
+            // 
+            this.clientTextBox.Location = new System.Drawing.Point(25, 129);
+            this.clientTextBox.Name = "clientTextBox";
+            this.clientTextBox.Size = new System.Drawing.Size(278, 20);
+            this.clientTextBox.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(22, 113);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(132, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Client(separated by space)";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(355, 227);
+            this.ClientSize = new System.Drawing.Size(355, 258);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.groupBox1);
@@ -239,5 +259,7 @@
         private System.Windows.Forms.TextBox rpsText;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox virtualClientText;
+        private System.Windows.Forms.TextBox clientTextBox;
+        private System.Windows.Forms.Label label7;
     }
 }

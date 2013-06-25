@@ -48,6 +48,8 @@ namespace FiddlerWCAT.Entities
         public int Warmup { get; set; }
         public int VirtualClient { get; set; }
         public int ThrottleRps { get; set; }
+        public string Clients { get; set; }
+
         
         private bool HasChange()
         {
@@ -82,7 +84,8 @@ namespace FiddlerWCAT.Entities
             try
             {
                 settings = Serializer.DeserializeObject<Settings>(data);
-                if (settings.VirtualClient < 1) settings.VirtualClient = 1; 
+                if (settings.VirtualClient < 1) settings.VirtualClient = 1;
+                if (String.IsNullOrEmpty(settings.Clients)) settings.Clients = "localhost";
             }
             catch
             {
@@ -114,6 +117,7 @@ namespace FiddlerWCAT.Entities
             wcatDefault = Directory.Exists(wcatDefault) ? wcatDefault : "";
             return wcatDefault; 
         }
+
 
 
     }

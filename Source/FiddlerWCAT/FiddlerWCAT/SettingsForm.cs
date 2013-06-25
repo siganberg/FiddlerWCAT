@@ -51,7 +51,8 @@ namespace FiddlerWCAT
             durationText.Text = Settings.Instance.Duration.ToString(CultureInfo.InvariantCulture);
             cooldownText.Text = Settings.Instance.Cooldown.ToString(CultureInfo.InvariantCulture);
             virtualClientText.Text = Settings.Instance.VirtualClient.ToString(CultureInfo.InvariantCulture);
-            rpsText.Text = Settings.Instance.ThrottleRps.ToString(CultureInfo.InvariantCulture); 
+            rpsText.Text = Settings.Instance.ThrottleRps.ToString(CultureInfo.InvariantCulture);
+            clientTextBox.Text = Settings.Instance.Clients;
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
@@ -78,7 +79,8 @@ namespace FiddlerWCAT
             Settings.Instance.Duration = duration;
             Settings.Instance.Cooldown = cooldown;
             Settings.Instance.VirtualClient = virtualClient;
-            Settings.Instance.ThrottleRps = throttlerps; 
+            Settings.Instance.ThrottleRps = throttlerps;
+            Settings.Instance.Clients = clientTextBox.Text.Trim();
             Settings.Instance.Save();
 
             Close();

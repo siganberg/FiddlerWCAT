@@ -35,8 +35,8 @@ namespace FiddlerWCAT.Entities
         [DefaultValue(true)]
         public bool Cookies { get; set; }
 
-        [DefaultValue("GET")]
-        public string Verb { get; set; }
+        [DefaultValue(Verb.GET)]
+        public Verb Verb { get; set; }
 
         [DefaultValue(false)]
         public bool Secure { get; set; }
