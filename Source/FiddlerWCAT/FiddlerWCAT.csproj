@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CapacityTestingTool.cs" />
-    <Compile Include="Helper\BatchCommand.cs" />
     <Compile Include="Helper\CSyntaxFormatter.cs" />
     <Compile Include="Default.cs" />
     <Compile Include="Header.cs" />

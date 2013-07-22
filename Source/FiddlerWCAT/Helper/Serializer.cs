@@ -38,11 +38,7 @@ namespace FiddlerWCAT.Helper
                 }
             }
         }
-
-        public static void UnknownAttributeHandler(object o, XmlAttributeEventArgs e)
-        {
-        }
-
+        
         public static string SerializeObject<T>(T obj)
         {
             try
