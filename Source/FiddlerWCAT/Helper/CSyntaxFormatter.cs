@@ -24,14 +24,14 @@ using System.Xml.Serialization;
 
 namespace FiddlerWCAT.Helper
 {
-    public class CFormatter : IFormatter
+    public class CSyntaxFormatter : IFormatter
     {
 
         public SerializationBinder Binder { get; set; }
         public StreamingContext Context { get; set; }
         private string MemberName { get; set; }
 
-        public CFormatter()
+        public CSyntaxFormatter()
         {
             Context = new StreamingContext(StreamingContextStates.All);
         }
@@ -45,7 +45,7 @@ namespace FiddlerWCAT.Helper
         {
             var properties = ReflectionHelper.GetProperties(graph);
             var tabs = new String('\t', 1);
-            
+
 
             var sb = new StringBuilder();
 
@@ -58,11 +58,11 @@ namespace FiddlerWCAT.Helper
                 //-- skip ignore field 
 
                 var ignore = prop.ProperInfo.GetCustomAttribute(typeof(XmlIgnoreAttribute), true);
-                if (ignore != null) continue; 
-                
+                if (ignore != null) continue;
+
                 if (IsSimpleType(value))
                 {
-                    var defaultValue = (DefaultValueAttribute) prop.ProperInfo.GetCustomAttribute(typeof (DefaultValueAttribute), true);
+                    var defaultValue = (DefaultValueAttribute)prop.ProperInfo.GetCustomAttribute(typeof(DefaultValueAttribute), true);
                     if (defaultValue != null && defaultValue.Value.Equals(value)) continue;
 
                     sb.AppendLine(String.Format(tabs + @"{0,-10} = {1};", GetMemberName(prop.ProperInfo.Name),
@@ -90,7 +90,7 @@ namespace FiddlerWCAT.Helper
                 sw.WriteLine(sb);
                 sw.WriteLine("}");
             }
-            
+
             sw.Close();
         }
 
@@ -104,8 +104,7 @@ namespace FiddlerWCAT.Helper
         public string[] SerializeObject(object obj, string memberName)
         {
             var stream = new MemoryStream();
-            var formatter = new CFormatter();
-            formatter.MemberName = memberName; 
+            var formatter = new CSyntaxFormatter { MemberName = memberName };
             formatter.Serialize(stream, obj);
             var test = Encoding.Default.GetString((stream.ToArray()));
             return test.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -120,9 +119,11 @@ namespace FiddlerWCAT.Helper
                 return Enum.GetName(objType, obj);
 
             var value = obj.ToString()
-                .Replace(@"""", @"\""");
-                //.Replace(@"""", @"\\""");
-            return  objType == typeof (bool) || objType == typeof (int) ? value : String.Format(@"""{0}""", value);
+                .Replace("\"", @"\\\");
+
+            return objType == typeof(bool) || objType == typeof(int)
+                ? value.ToLower()
+                : String.Format(@"""{0}""", value);
         }
 
         public bool IsSimpleType(Object obj)

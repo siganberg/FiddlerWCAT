@@ -13,7 +13,7 @@
 
 using System;
 
-namespace FiddlerWCAT.Entities
+namespace FiddlerWCAT
 {
     [Serializable]
     public class Header

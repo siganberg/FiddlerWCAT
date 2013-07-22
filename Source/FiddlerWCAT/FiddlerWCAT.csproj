@@ -48,27 +48,27 @@
   <ItemGroup>
     <Compile Include="CapacityTestingTool.cs" />
     <Compile Include="Helper\BatchCommand.cs" />
-    <Compile Include="Helper\CFormatter.cs" />
-    <Compile Include="Entities\Default.cs" />
-    <Compile Include="Entities\Header.cs" />
-    <Compile Include="Entities\Request.cs" />
-    <Compile Include="Entities\Scenario.cs" />
-    <Compile Include="Entities\Transaction.cs" />
+    <Compile Include="Helper\CSyntaxFormatter.cs" />
+    <Compile Include="Default.cs" />
+    <Compile Include="Header.cs" />
+    <Compile Include="Request.cs" />
+    <Compile Include="Scenario.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="Helper\EntityInfoFactory.cs" />
     <Compile Include="Helper\PropertyInfoEx.cs" />
     <Compile Include="Helper\ReflectionHelper.cs" />
     <Compile Include="Helper\Serializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\Setting.cs" />
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Setting.cs" />
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

@@ -10,16 +10,14 @@
 // <author>Francis Marasigan</author>
 // <email>francis.marasigan@live.com</email>
 // <date>2013-06-23</date>
-      
-      
-      
+
+
 using System;
 using System.Globalization;
 using System.IO;
 using System.Windows.Forms;
-using FiddlerWCAT.Entities;
 
-namespace FiddlerWCAT
+namespace FiddlerWCAT.Forms
 {
     public partial class SettingsForm : Form
     {

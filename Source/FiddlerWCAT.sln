@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiddlerWCAT", "FiddlerWCAT\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiddlerWCAT.Test", "FiddlerWCAT.Test\FiddlerWCAT.Test.csproj", "{FB75D05B-7E5B-47F3-8CB4-982F335E941C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BB47BA05-2ED4-4E5B-B162-6F9E67F5B3F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{530E4677-A37B-44DD-9632-5AA7F67A6EEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{24C68EFE-3AD1-4B43-91C4-1260ADB3CA47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,5 +28,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{530E4677-A37B-44DD-9632-5AA7F67A6EEA} = {BB47BA05-2ED4-4E5B-B162-6F9E67F5B3F8}
+		{FB75D05B-7E5B-47F3-8CB4-982F335E941C} = {530E4677-A37B-44DD-9632-5AA7F67A6EEA}
+		{088C26DC-D703-4B7A-A526-91F1D8747376} = {24C68EFE-3AD1-4B43-91C4-1260ADB3CA47}
 	EndGlobalSection
 EndGlobal

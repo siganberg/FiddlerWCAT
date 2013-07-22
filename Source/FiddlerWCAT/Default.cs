@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace FiddlerWCAT.Entities
+namespace FiddlerWCAT
 {
     [Serializable]
     public class Default 
@@ -35,7 +35,7 @@ namespace FiddlerWCAT.Entities
         [DefaultValue(true)]
         public bool Cookies { get; set; }
 
-        [DefaultValue(Verb.GET)]
+        [DefaultValue(Verb.Get)]
         public Verb Verb { get; set; }
 
         [DefaultValue(false)]

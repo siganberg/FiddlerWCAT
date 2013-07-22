@@ -13,33 +13,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
-namespace FiddlerWCAT.Entities
+namespace FiddlerWCAT
 {
     [Serializable]
-    public class Request : Default
+    public class Transaction
     {
-        public string Url { get; set; }
         public string Id { get; set; }
-        public string PostData { get; set; }
-        public string RedirVerb { get; set; }
+        public int Weight { get; set; }
+        public List<Request> Request { get; set; }
 
-        [DefaultValue(false)]
-        public bool Redirect { get; set; }
-        
-        public Request()
+        public Transaction()
         {
-            AddHeader = new List<Header>();
-            SetHeader = new List<Header>();
+            Request = new List<Request>();
         }
-
-     
     }
 
-    public enum Verb
-    {
-        GET,
-        POST
-    }
+    
 }

@@ -1,4 +1,4 @@
-﻿namespace FiddlerWCAT
+﻿namespace FiddlerWCAT.Forms
 {
     partial class SettingsForm
     {

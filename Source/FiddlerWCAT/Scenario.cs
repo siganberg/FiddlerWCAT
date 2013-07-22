@@ -18,10 +18,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Xml.Serialization;
 using FiddlerWCAT.Helper;
 
-namespace FiddlerWCAT.Entities
+namespace FiddlerWCAT
 {
     [Serializable]
     public class Scenario
@@ -37,10 +36,7 @@ namespace FiddlerWCAT.Entities
         public int? ThrottleRps { get; set; }
         public Default Default { get; set; }
         public List<Transaction> Transaction { get; set; }
-
-        [XmlIgnore]
-        public string FilePath { get; set; }
-
+        
 
         public Scenario()
         {
@@ -123,21 +119,26 @@ namespace FiddlerWCAT.Entities
 
         public void Save()
         {
-            var path = String.Format(@"{0}\{1}\", Settings.Instance.WcatHomeDirectory, Folder);
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            FilePath = path + String.Format("scenario_{0}.ubr", Name);
-
-            var fs = new FileStream(FilePath, FileMode.Create);
-            var formatter = new CFormatter();
+            var path = GetFilePath();
+            var fs = new FileStream(path, FileMode.Create);
+            var formatter = new CSyntaxFormatter();
             formatter.Serialize(fs, this);
             fs.Close();
+        }
+
+        private string GetFilePath()
+        {
+            var path = String.Format(@"{0}\{1}\", Settings.Instance.WcatHomeDirectory, Folder);
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            path = Path.Combine(path, String.Format("scenario_{0}.ubr", Name));
+            return path;
         }
 
         public string GetRunSyntax()
         {
             return String.Format(@"wcat.wsf -terminate -run -clients localhost -t {0}\{1} -s {2} -v {3}"
                 , Folder
-                , Path.GetFileName(FilePath)
+                , Path.GetFileName(GetFilePath())
                 , Default.Server
                 , Settings.Instance.VirtualClient);
         }
@@ -145,8 +146,10 @@ namespace FiddlerWCAT.Entities
 
         public int Run()
         {
+            Save();
+
             //-- wcat.wsf -terminate -run -clients localhost,dmgdevv12 -t invalid_header.ubr -s eagl.spe.sony.com -v %1 
-            var command = String.Format(@"-terminate -run -clients {3} -t ubrs\{0} -s {1} -v {2}", Path.GetFileName(FilePath)
+            var command = String.Format(@"-terminate -run -clients {3} -t ubrs\{0} -s {1} -v {2}", Path.GetFileName(GetFilePath())
                 , Default.Server
                 , Settings.Instance.VirtualClient
                 , Settings.Instance.Clients);
@@ -160,7 +163,7 @@ namespace FiddlerWCAT.Entities
 
             var process = Process.Start(processInfo);
             process.WaitForExit();
-            return  process.ExitCode;
+            return process.ExitCode;
         }
     }
 }
