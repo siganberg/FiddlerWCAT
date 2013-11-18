@@ -50,6 +50,7 @@ namespace FiddlerWCAT.Forms
             cooldownText.Text = Settings.Instance.Cooldown.ToString(CultureInfo.InvariantCulture);
             virtualClientText.Text = Settings.Instance.VirtualClient.ToString(CultureInfo.InvariantCulture);
             rpsText.Text = Settings.Instance.ThrottleRps.ToString(CultureInfo.InvariantCulture);
+            portText.Text = Settings.Instance.Port.ToString();
             clientTextBox.Text = Settings.Instance.Clients;
         }
 
@@ -63,7 +64,7 @@ namespace FiddlerWCAT.Forms
         {
             Settings.Instance.WcatHomeDirectory = wcatDirectoryText.Text.Trim();
 
-            int warmup, duration, cooldown, virtualClient, throttlerps;
+            int warmup, duration, cooldown, virtualClient, throttlerps, port;
 
 
             int.TryParse(warmupText.Text.Trim(), out warmup);
@@ -71,7 +72,7 @@ namespace FiddlerWCAT.Forms
             int.TryParse(cooldownText.Text.Trim(), out cooldown);
             int.TryParse(virtualClientText.Text.Trim(), out virtualClient);
             int.TryParse(rpsText.Text.Trim(), out throttlerps);
-
+            int.TryParse(portText.Text.Trim(), out port);
 
             Settings.Instance.Warmup = warmup;
             Settings.Instance.Duration = duration;
@@ -79,6 +80,7 @@ namespace FiddlerWCAT.Forms
             Settings.Instance.VirtualClient = virtualClient;
             Settings.Instance.ThrottleRps = throttlerps;
             Settings.Instance.Clients = clientTextBox.Text.Trim();
+            Settings.Instance.Port = port; 
             Settings.Instance.Save();
 
             Close();

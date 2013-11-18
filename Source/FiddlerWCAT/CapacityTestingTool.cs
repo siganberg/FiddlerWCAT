@@ -77,8 +77,9 @@ namespace FiddlerWCAT
                 var request = new Request { Url = oSession.PathAndQuery, Server = oSession.hostname };
                 foreach (var h in oSession.oRequest.headers)
                 {
-                    var header = new Header { Name = h.Name, Value = h.Value };
+                    var header = new Header { Name = h.Name, Value = h.Value, };
                     request.SetHeader.Add(header);
+                        
 
                     var postData = oSession.GetRequestBodyAsString();
                     if (!string.IsNullOrEmpty(postData))

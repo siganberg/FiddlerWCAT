@@ -50,6 +50,7 @@ namespace FiddlerWCAT
         public int VirtualClient { get; set; }
         public int ThrottleRps { get; set; }
         public string Clients { get; set; }
+        public int Port { get; set; }
 
         
         private bool HasChange()
@@ -96,9 +97,6 @@ namespace FiddlerWCAT
             return settings;
         }
 
-        
-
-
         public void Save()
         {
             var filename = Path.GetDirectoryName(Application.ExecutablePath);
@@ -118,6 +116,7 @@ namespace FiddlerWCAT
             wcatDefault = Directory.Exists(wcatDefault) ? wcatDefault : "";
             return wcatDefault; 
         }
+
 
 
 

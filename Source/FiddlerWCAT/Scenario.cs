@@ -79,13 +79,13 @@ namespace FiddlerWCAT
             if (defaultProperty == null || requestProperty == null) return;
 
             var servers = requests.Where(a => defaultProperty.GetValue(a) != null).Select(a => requestProperty.GetValue(a)).GroupBy(a => a).ToList();
-            var highOccurance = servers.OrderByDescending(a => a.Count()).FirstOrDefault();
+            var highOccurance = servers.OrderByDescending(a => a.Count()).Select(a => a.Key).FirstOrDefault();
 
             if (highOccurance == null) return;
 
-            var matchRequest = requests.Where(a => requestProperty.GetValue(a) == highOccurance.Key);
+            var matchRequest = requests.Where(a => requestProperty.GetValue(a) == highOccurance);
             matchRequest.ToList().ForEach(a => requestProperty.SetValue(a, null));
-            defaultProperty.SetValue(Default, highOccurance.Key);
+            defaultProperty.SetValue(Default, highOccurance);
         }
 
         private void MoveRequestHeaderToDefault(IEnumerable<Request> requests)
@@ -154,6 +154,9 @@ namespace FiddlerWCAT
                 , Settings.Instance.VirtualClient
                 , Settings.Instance.Clients);
 
+            if (Settings.Instance.Port > 0)
+                command += " -port " + Settings.Instance.Port;
+            
             var processInfo = new ProcessStartInfo
             {
                 WorkingDirectory = Settings.Instance.WcatHomeDirectory,

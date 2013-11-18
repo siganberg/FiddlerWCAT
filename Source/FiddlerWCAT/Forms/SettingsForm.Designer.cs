@@ -39,14 +39,16 @@
             this.cooldownText = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.clientTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.rpsText = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.virtualClientText = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.saveButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.clientTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.portText = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,7 +129,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.clientTextBox);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.portText);
             this.groupBox1.Controls.Add(this.rpsText);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.virtualClientText);
@@ -144,6 +148,13 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Default Value";
+            // 
+            // clientTextBox
+            // 
+            this.clientTextBox.Location = new System.Drawing.Point(25, 129);
+            this.clientTextBox.Name = "clientTextBox";
+            this.clientTextBox.Size = new System.Drawing.Size(278, 20);
+            this.clientTextBox.TabIndex = 2;
             // 
             // label6
             // 
@@ -177,6 +188,15 @@
             this.virtualClientText.Size = new System.Drawing.Size(48, 20);
             this.virtualClientText.TabIndex = 0;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(22, 113);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(132, 13);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Client(separated by space)";
+            // 
             // saveButton
             // 
             this.saveButton.Location = new System.Drawing.Point(92, 226);
@@ -197,21 +217,21 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // clientTextBox
+            // portText
             // 
-            this.clientTextBox.Location = new System.Drawing.Point(25, 129);
-            this.clientTextBox.Name = "clientTextBox";
-            this.clientTextBox.Size = new System.Drawing.Size(278, 20);
-            this.clientTextBox.TabIndex = 2;
+            this.portText.Location = new System.Drawing.Point(259, 84);
+            this.portText.Name = "portText";
+            this.portText.Size = new System.Drawing.Size(48, 20);
+            this.portText.TabIndex = 0;
             // 
-            // label7
+            // label8
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(22, 113);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(132, 13);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Client(separated by space)";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(147, 87);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(26, 13);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Port";
             // 
             // SettingsForm
             // 
@@ -261,5 +281,7 @@
         private System.Windows.Forms.TextBox virtualClientText;
         private System.Windows.Forms.TextBox clientTextBox;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox portText;
     }
 }
