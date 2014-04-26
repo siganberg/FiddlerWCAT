@@ -75,6 +75,9 @@ namespace FiddlerWCAT
                 var transaction = new Transaction { Id = oSession.id.ToString(CultureInfo.InvariantCulture), Weight = 1 };
 
                 var request = new Request { Url = oSession.PathAndQuery, Server = oSession.hostname };
+
+                request.Secure = oSession.isHTTPS;
+                
                 foreach (var h in oSession.oRequest.headers)
                 {
                     var header = new Header { Name = h.Name, Value = h.Value, };

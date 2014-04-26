@@ -24,6 +24,7 @@ namespace FiddlerWCAT
         public string Id { get; set; }
         public string PostData { get; set; }
         public string RedirVerb { get; set; }
+        public bool Secure { get; set; }
 
         [DefaultValue(false)]
         public bool Redirect { get; set; }
